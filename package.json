@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "format": "vp fmt . --write"
+  },
+  "devDependencies": {
+    "vite-plus": "^0.1.19"
+  },
+  "packageManager": "pnpm@10.33.2"
+}
