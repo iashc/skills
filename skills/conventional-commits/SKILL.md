@@ -1,6 +1,12 @@
 ---
 name: conventional-commits
-description: Commit code changes using Conventional Commits. Use when the user asks to commit, make a commit, write a commit message, fix a commit message, review a commit message, choose a commit type or scope, handle breaking changes, stage and commit, squash or amend commits, generate a changelog entry, or asks "what type should this be". Also use when the user says "commit this", "commit my changes", or "git commit".
+description: >-
+  Commit code changes using Conventional Commits. Use when the user asks to
+  commit, make a commit, write a commit message, fix a commit message, review a
+  commit message, choose a commit type or scope, handle breaking changes, stage
+  and commit, squash or amend commits, generate a changelog entry, or asks
+  "what type should this be". Also use when the user says "commit this", "commit
+  my changes", or "git commit".
 license: MIT
 metadata:
   author: Ash Li
