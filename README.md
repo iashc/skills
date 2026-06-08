@@ -6,12 +6,14 @@ Reusable Agent Skills for `vpx skills` and skills.sh-compatible clients.
 
 | Skill | Description |
 |-------|-------------|
+| `agents-guide` | Create, review, shorten, migrate, and organize `AGENTS.md` and `CLAUDE.md` files. |
+| `code-explainer` | Explain code with visual diagrams and analogies. |
 | `conventional-commits` | Write, review, and improve Git commit messages following Conventional Commits 1.0.0. |
 
 ## Install
 
 - List available skills: `vpx skills add iashc/skills --list`
-- Install one skill: `vpx skills add iashc/skills --skill conventional-commits`
+- Install one skill: `vpx skills add iashc/skills --skill <skill-name>`
 - Install all skills: `vpx skills add iashc/skills --all`
 
 ## Development
