@@ -4,11 +4,12 @@ Reusable Agent Skills for `vpx skills` and skills.sh-compatible clients.
 
 ## Skills
 
-| Skill | Description |
-|-------|-------------|
-| `agents-guide` | Create, review, shorten, migrate, and organize `AGENTS.md` and `CLAUDE.md` files. |
-| `code-explainer` | Explain code with visual diagrams and analogies. |
+| Skill                  | Description                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------ |
+| `agents-guide`         | Create, review, shorten, migrate, and organize `AGENTS.md` and `CLAUDE.md` files.    |
+| `code-explainer`       | Explain code with visual diagrams and analogies.                                     |
 | `conventional-commits` | Write, review, and improve Git commit messages following Conventional Commits 1.0.0. |
+| `frontend-design`      | Build, redesign, and visually review frontend experiences.                           |
 
 ## Install
 
