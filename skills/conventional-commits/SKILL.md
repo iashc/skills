@@ -1,16 +1,16 @@
 ---
 name: conventional-commits
 description: >-
-  Commit code changes using Conventional Commits. Use when the user asks to
-  commit, make a commit, write a commit message, fix a commit message, review a
-  commit message, choose a commit type or scope, handle breaking changes, stage
-  and commit, squash or amend commits, generate a changelog entry, or asks
-  "what type should this be". Also use when the user says "commit this", "commit
-  my changes", or "git commit".
+  Analyze changes by purpose and domain, then create or review Conventional
+  Commits. Use when the user asks to commit, make a commit, write or fix a
+  commit message, review a commit message, choose a commit type or scope, handle
+  breaking changes, stage and commit, squash or amend commits, generate a
+  changelog entry, or asks "what type should this be". Also use when the user
+  says "commit this", "commit my changes", or "git commit".
 license: MIT
 metadata:
   author: Ash Li
-  version: '2026-04-29'
+  version: '2026-08-25'
 ---
 
 # Conventional Commits
@@ -142,31 +142,68 @@ When asked to review a commit message:
 
 ## Commit Workflow
 
-### Steps
+When the user asks to commit changes, that request authorizes staging and committing
+the changes within the scope they named. Do not ask for file-by-file confirmation
+unless the semantic commit boundary is genuinely ambiguous.
 
-Follow these steps in order. Do not skip ahead.
+Follow these steps in order:
 
 1. Run `git status` to determine the working tree state.
-2. Based on the `git status` output, apply the **first matching rule** below:
-   - **Conflict or in-progress operation** (merge, rebase, cherry-pick, unresolved conflicts) — The repository is unstable. Committing now could produce a broken history. Tell the user and stop; do not proceed.
-   - **No changes** — Nothing to commit. Tell the user and stop; do not proceed.
-   - **All changes staged** — You have everything you need. Continue to step 3.
-   - **Only unstaged or untracked changes** — `git diff --staged` would be empty, so you cannot write a meaningful message. Ask the user which files to stage, then **wait for their response** before continuing. You may suggest staging all if changes look related, but the user decides scope.
-   - **Partially staged** — There are staged changes already, but the user may want more in this commit. Ask whether to commit staged only or stage additional changes, then **wait for their response**. Default to staged only — including unconfirmed work risks committing changes the user did not intend to share yet.
-3. Stage only the files the user explicitly confirmed.
-4. Run `git diff --staged` and read the full diff. `git diff --staged --stat`, `git diff --staged --name-status`, and file lists are not sufficient substitutes.
-5. Select type and scope based on the staged diff content.
-6. Detect language from recent commits and confirm it fits the staged diff.
-7. Write the commit message (subject, optional body, optional footers).
-8. Validate the message against this spec and the staged diff.
-9. Commit with `git commit -m`.
+2. Stop and tell the user when there is a conflict or an in-progress merge,
+   rebase, or cherry-pick. Stop when there are no changes.
+3. Determine the candidate changes:
+   - Honor an explicit scope such as "staged changes only", named paths, or a
+     named feature.
+   - Otherwise, consider all staged, unstaged, and untracked changes. Existing
+     staging state alone is not a semantic boundary and does not require a
+     question.
+4. Read the complete candidate changes before deciding their commit boundaries.
+   Inspect both staged and unstaged diffs and read relevant untracked files;
+   stats, name-status output, and file lists are not sufficient substitutes.
+5. Partition the changes into cohesive commit units by purpose and semantic
+   domain. A domain is a coherent product capability or component, not a file or
+   directory. Paths are evidence, but file count and directory count are not
+   decision criteria:
+   - Multiple files belong together when they implement one purpose in one
+     module or domain, including its tests, docs, migrations, generated files,
+     and dependency or lockfile updates.
+   - One file may contain multiple commit units when independent changes affect
+     different purposes or domains.
+   - Different modules or domains are separate commit units. Also separate
+     changes that can be understood, reverted, or reviewed independently,
+     especially unrelated behavior, formatting, or maintenance.
+6. Choose the matching path:
+   - **One cohesive commit unit** — Stage the whole unit, including all related
+     files or hunks, and continue without asking for confirmation.
+   - **Multiple commit units** — Present an ordered split plan with the proposed
+     Conventional Commit message and included files or hunks for each commit.
+     Ask once whether to execute that plan, and wait for the user's response
+     before changing the index or committing.
+   - **Ambiguous boundary** — Ask only the smallest question needed when the
+     content does not provide enough evidence to decide whether changes belong
+     together.
+7. For each authorized commit unit, stage only that unit and run
+   `git diff --staged`. Read the full staged diff and verify that it contains the
+   complete unit and no changes from another unit.
+8. Select type and scope from the staged diff, detect the language from recent
+   commits, and write the commit message.
+9. Validate the message against this spec and the staged diff, then commit with
+   `git commit -m`.
+10. After all planned commits, run `git status` and report the created commits
+    and any remaining changes.
 
 ### Splitting Commits
 
-If the staged diff contains unrelated changes, suggest splitting into separate commits. Look for:
+Decide whether to split from semantic intent, not from the number of changed
+files, directories, or staging states. Two or more semantic domains require a
+split plan and confirmation. Look for:
 
-- Changes to unrelated files or modules.
+- Changes to different modules or domains.
 - A mix of behavior changes and formatting/style changes.
 - Multiple distinct purposes that would need separate subjects.
 
-Do not force splits for small, cohesive changes even if they touch multiple files.
+Do not split a cohesive change merely because it touches many files or combines
+implementation with its supporting tests, docs, schema changes, or generated
+artifacts. Conversely, consider splitting a single file when it contains
+independent changes. If a safe split requires hunk-level staging, use it rather
+than grouping unrelated changes by filename.
