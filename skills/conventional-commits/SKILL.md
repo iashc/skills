@@ -2,15 +2,16 @@
 name: conventional-commits
 description: >-
   Analyze changes by purpose and domain, then create or review Conventional
-  Commits. Use when the user asks to commit, make a commit, write or fix a
-  commit message, review a commit message, choose a commit type or scope, handle
-  breaking changes, stage and commit, squash or amend commits, generate a
-  changelog entry, or asks "what type should this be". Also use when the user
-  says "commit this", "commit my changes", or "git commit".
+  Commit messages and pull request titles. Use when the user asks to commit,
+  make a commit, write or fix a commit message, review a commit message, create
+  a pull request, write or review a PR title, choose a commit type or scope,
+  handle breaking changes, stage and commit, squash or amend commits, generate
+  a changelog entry, or asks "what type should this be". Also use when the user
+  says "commit this", "commit my changes", "git commit", or "create a PR".
 license: MIT
 metadata:
   author: Ash Li
-  version: '2026-08-25'
+  version: '2026-09-03'
 ---
 
 # Conventional Commits
@@ -130,6 +131,41 @@ git log --no-merges -10 --pretty=%s
 ```
 
 Use the dominant language when clear. If the repository has fewer than 3 non-merge commits, use English. Otherwise, use English when no dominant language is clear.
+
+## Pull Request Titles
+
+Use the Conventional Commit header format for a pull request title:
+
+```text
+<type>[optional scope][optional !]: <subject>
+```
+
+When writing or reviewing a pull request title:
+
+1. Inspect the complete pull request diff as the hosting platform computes it.
+   For local branches, use a merge-base comparison such as
+   `git diff <base>...HEAD`. Do not derive the title from only the latest commit.
+2. Confirm the diff represents one cohesive semantic intent. Supporting tests,
+   documentation, generated files, and dependency updates may belong to that
+   intent. If the branch contains independent changes that cannot be summarized
+   truthfully by one title, explain the mismatch. Before creating the pull
+   request, ask whether to split it.
+3. Choose the type, optional scope, breaking marker, language, and subject using
+   the same rules as a commit header. For a draft pull request, describe the
+   intended completed change; do not use `wip` unless the user requests it.
+4. Validate the title against the complete pull request diff. When reviewing,
+   state whether it is valid and list specific fixes. When creating, pass the
+   title explicitly to the pull request creation tool instead of relying on
+   autofill from a branch name or commit.
+
+Do not append a pull request number such as `(#123)` to the title; the hosting
+platform may add it to the resulting merge or squash commit. The pull request
+description is not a commit body: follow the repository's pull request template
+and summarize the change, motivation, and validation as appropriate.
+
+Creating a pull request does not authorize rewriting, squashing, or amending
+existing commits. When editing an existing pull request, change its title only
+when the user requested that mutation.
 
 ## Review
 
