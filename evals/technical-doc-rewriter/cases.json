@@ -1,0 +1,33 @@
+{
+  "runbook-zh.md": {
+    "description": "Chinese runbook with commands, a warning after its step, and rollback steps.",
+    "warnings": [
+      {
+        "keywords": ["撤销", "丢失", "promote"],
+        "step": "orderctl promote --replica order-db-2"
+      }
+    ],
+    "planned": []
+  },
+  "readme-en.md": {
+    "description": "English README with install, configuration and upgrade steps.",
+    "warnings": [
+      {
+        "keywords": ["delete", "lose", "lost"],
+        "step": "logship migrate-spool"
+      }
+    ],
+    "planned": []
+  },
+  "design-zh.md": {
+    "description": "Chinese design document with performance numbers and a planned item written as done.",
+    "warnings": [],
+    "planned": [
+      {
+        "keyword": "热点",
+        "markers": ["计划", "将", "预计", "尚未", "下一步", "后续", "路线"],
+        "done": "已经|已支持|已实现|已上线"
+      }
+    ]
+  }
+}
