@@ -7,7 +7,6 @@ Reusable Agent Skills for `vpx skills` and skills.sh-compatible clients.
 | Skill                    | Description                                                                        |
 | ------------------------ | ---------------------------------------------------------------------------------- |
 | `agents-guide`           | Create, review, shorten, migrate, and organize `AGENTS.md` and `CLAUDE.md` files.  |
-| `code-explainer`         | Explain code with visual diagrams and analogies.                                   |
 | `conventional-commits`   | Write and review Conventional Commit messages and pull request titles.             |
 | `frontend-design`        | Build, redesign, and visually review frontend experiences.                         |
 | `technical-doc-rewriter` | Rewrite and review technical documents in simplified technical English or Chinese. |
