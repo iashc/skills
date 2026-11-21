@@ -14,7 +14,7 @@ description: >-
 license: MIT
 metadata:
   author: Ash Li
-  version: '2026-10-28'
+  version: '2026-11-21'
 ---
 
 # Technical Doc Rewriter
@@ -118,13 +118,8 @@ The guardrails win over everything. Project conventions (a glossary, a style gui
 
 ## Strict-only rules
 
-- 1.5 Verbs say what happens (not `handle`, `处理`). 2.3 Hyphens (EN) / 的地得 (ZH).
-- 3.2 Active voice, with the limit of 4.2. 3.3 Simple tenses; no `正在`. 3.5 One-word verbs (EN).
-- 4.4 Show cause and contrast. 4.5 Lists for three or more items. 4.6 Keep articles (EN).
-- 5.5 Reasons before the steps, results after them. 6.2 One topic, at most six sentences in a
-  paragraph. 7.3 One risk in each warning.
-- 9.1 One form for each term. 9.2 Code names in backticks. 9.3 Official names; define
-  abbreviations. 9.5 "You" and "we". 9.6 References the reader can find.
+In the strict tier, read the rules file of the document's language before you rewrite, and also
+apply each rule marked `(strict)` or `（严格）` in it.
 
 ## Workflow
 
