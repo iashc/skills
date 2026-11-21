@@ -7,71 +7,41 @@ description: >-
   a pull request, write or review a PR title, choose a commit type or scope,
   handle breaking changes, stage and commit, squash or amend commits, generate
   a changelog entry, or asks "what type should this be". Also use when the user
-  says "commit this", "commit my changes", "git commit", or "create a PR".
+  says "commit this", "commit my changes", "git commit", "create a PR",
+  "提交", "写提交信息", "开个 PR", or "这个该用什么 type".
 license: MIT
 metadata:
   author: Ash Li
-  version: '2026-09-03'
+  version: '2026-11-21'
 ---
 
 # Conventional Commits
 
-Write structured commit messages that are human-readable and machine-parseable, based on Conventional Commits 1.0.0.
-
-## Message Format
-
-```text
-<type>[optional scope][optional !]: <subject>
-
-[optional body]
-
-[optional footer(s)]
-```
+Write commit messages and pull request titles that follow Conventional Commits
+1.0.0, with the conventions below.
 
 ## Types
 
-Select one type:
+Use the standard types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`,
+`test`, `build`, `ci`, `chore`, `revert`. Two non-standard types are also
+allowed and are excluded from changelogs:
 
-- `feat`: new feature.
-- `fix`: bug fix.
-- `docs`: docs only.
-- `style`: formatting only.
-- `refactor`: restructure only.
-- `perf`: performance.
-- `test`: tests.
-- `build`: build or deps.
-- `ci`: CI.
-- `chore`: maintenance.
-- `revert`: revert.
-- `wip`: incomplete work (non-standard; excluded from changelogs).
-- `release`: release work (non-standard; excluded from changelogs).
+- `wip`: incomplete work.
+- `release`: release work.
 
-### Choosing Between Similar Types
-
-When the change touches multiple concerns, pick the type that best describes the primary intent:
-
-- **feat vs refactor**: Does the change add observable behavior (new endpoint, new UI element, new config option)? Use `feat`. If behavior is unchanged from the user's perspective, use `refactor`.
-- **fix vs refactor**: Does the change correct wrong behavior (bug, crash, incorrect output)? Use `fix`. If the code was working but poorly structured, use `refactor`.
-- **fix vs chore**: Does the change fix a user-facing bug? Use `fix`. If it fixes a build script, updates a lockfile, or corrects a dev-only issue, use `chore`.
-- **feat vs perf**: Does the change add a new capability? Use `feat`. If it makes an existing capability faster without changing its interface, use `perf`.
-- **chore vs build**: Does the change modify the build system or external dependencies (webpack config, Dockerfile, package.json deps)? Use `build`. For other maintenance tasks (renaming files, updating .gitignore), use `chore`.
-- **style vs refactor**: Does the change only affect whitespace, semicolons, or formatting? Use `style`. If it renames variables, extracts functions, or restructures logic (even without behavior change), use `refactor`.
-
-When a commit genuinely spans two types, prefer splitting into separate commits. If splitting is impractical, use the higher-impact type.
+When a change spans two types, prefer splitting it. If splitting is
+impractical, use the higher-impact type.
 
 ## Scope
 
 - Omit scope by default.
-- Use scope when the repository has an established scope convention.
-- Use scope when the user asks for one.
+- Use scope when the repository has an established scope convention, or when
+  the user asks for one.
 
-Use the Jira key as scope when the current branch matches `feature/[JIRA-KEY]` or `feature/[JIRA-KEY]-*`. A Jira key is an uppercase alphabetic prefix followed by a hyphen and digits (e.g., `PROJ-123`). Only the `feature/` prefix triggers scope extraction; other prefixes like `fix/` or `hotfix/` do not.
-
-```bash
-git branch --show-current
-```
-
-Branch examples:
+Use the Jira key as scope when the current branch (`git branch --show-current`)
+matches `feature/[JIRA-KEY]` or `feature/[JIRA-KEY]-*`. A Jira key is an
+uppercase alphabetic prefix, a hyphen, and digits (for example `PROJ-123`).
+Only the `feature/` prefix triggers scope extraction.
 
 ```text
 feature/PROJ-123       -> feat(PROJ-123): add passkey login
@@ -81,48 +51,17 @@ fix/BUG-42             -> fix: handle expired sessions  (no scope)
 main, develop          -> no scope implied
 ```
 
-## Subject
+## Subject, Body, and Breaking Changes
 
-Use imperative form:
-
-- Use `add`, not `added` or `adds`.
-- Use lowercase except for proper nouns, acronyms, issue IDs, and user-facing names.
-- Do not end with a period.
-- Keep it under 72 characters.
-
-## Body
-
-- Omit the body by default.
-- Add a body only when the user asks for one.
-- Explain what and why; do not repeat the header.
-
-## Footers
-
-- Use footers for trailers such as issues, reviewers, and breaking changes.
-- Use hyphens in footer tokens, except `BREAKING CHANGE`.
-
-```text
-Refs: #123
-Reviewed-by: Name
-BREAKING CHANGE: environment variables now override config files
-```
-
-## Breaking Changes
-
-- Mark breaking changes with `!` in the header, a `BREAKING CHANGE:` footer, or both.
-- When writing a new breaking-change commit message, prefer using both `!` and a `BREAKING CHANGE:` footer.
-- Explain migration impact when using the footer.
-
-```text
-feat(api)!: require explicit tenant id
-
-BREAKING CHANGE: API clients must pass tenantId on every request.
-```
+- Subject: imperative (`add`, not `added`), lowercase except proper nouns,
+  acronyms, issue IDs, and user-facing names, no trailing period, under 72
+  characters.
+- Body: omit unless the user asks for one. When present, explain what and why
+  without repeating the header.
+- Breaking changes: in a new message, use both `!` in the header and a
+  `BREAKING CHANGE:` footer that explains the migration impact.
 
 ## Language
-
-- Match language in subject, body, and footer values.
-- Keep type, scope, and footer keys unchanged.
 
 Detect the dominant language from the latest 10 non-merge commit subjects:
 
@@ -130,116 +69,87 @@ Detect the dominant language from the latest 10 non-merge commit subjects:
 git log --no-merges -10 --pretty=%s
 ```
 
-Use the dominant language when clear. If the repository has fewer than 3 non-merge commits, use English. Otherwise, use English when no dominant language is clear.
+Use the dominant language when clear. Use English when the repository has fewer
+than 3 non-merge commits or no language is dominant. Use the same language in
+the subject, body, and footer values. Keep type, scope, and footer keys
+unchanged.
 
 ## Pull Request Titles
 
-Use the Conventional Commit header format for a pull request title:
+A pull request title uses the commit header format.
 
-```text
-<type>[optional scope][optional !]: <subject>
-```
+1. Read the complete pull request diff as the hosting platform computes it, for
+   example `git diff <base>...HEAD`. Do not derive the title from only the
+   latest commit.
+2. Confirm the diff has one cohesive semantic intent. Supporting tests, docs,
+   generated files, and dependency updates can belong to that intent. If the
+   branch contains independent changes that one title cannot describe
+   truthfully, explain the mismatch and ask whether to split before you create
+   the pull request.
+3. Choose the header with the commit rules. For a draft pull request, describe
+   the intended completed change; do not use `wip` unless the user asks.
+4. When creating, pass the title explicitly to the creation tool instead of
+   relying on autofill from a branch name or commit.
 
-When writing or reviewing a pull request title:
-
-1. Inspect the complete pull request diff as the hosting platform computes it.
-   For local branches, use a merge-base comparison such as
-   `git diff <base>...HEAD`. Do not derive the title from only the latest commit.
-2. Confirm the diff represents one cohesive semantic intent. Supporting tests,
-   documentation, generated files, and dependency updates may belong to that
-   intent. If the branch contains independent changes that cannot be summarized
-   truthfully by one title, explain the mismatch. Before creating the pull
-   request, ask whether to split it.
-3. Choose the type, optional scope, breaking marker, language, and subject using
-   the same rules as a commit header. For a draft pull request, describe the
-   intended completed change; do not use `wip` unless the user requests it.
-4. Validate the title against the complete pull request diff. When reviewing,
-   state whether it is valid and list specific fixes. When creating, pass the
-   title explicitly to the pull request creation tool instead of relying on
-   autofill from a branch name or commit.
-
-Do not append a pull request number such as `(#123)` to the title; the hosting
-platform may add it to the resulting merge or squash commit. The pull request
-description is not a commit body: follow the repository's pull request template
-and summarize the change, motivation, and validation as appropriate.
-
-Creating a pull request does not authorize rewriting, squashing, or amending
-existing commits. When editing an existing pull request, change its title only
-when the user requested that mutation.
+- Do not append a number such as `(#123)`; the platform can add it to the merge
+  commit.
+- The pull request description is not a commit body. Follow the repository's
+  template and summarize the change, motivation, and validation.
+- Creating a pull request does not authorize rewriting, squashing, or amending
+  commits. On an existing pull request, change the title only when the user
+  asks.
 
 ## Review
 
-When asked to review a commit message:
-
-1. Check format: type, scope syntax, subject case and length, body separation, footer format.
-2. Check semantics: does the type match the staged diff? A `docs` commit should not contain logic changes.
-3. Check breaking changes: require at least one valid marker (`!` in the header or `BREAKING CHANGE:` footer). If both are present, confirm they describe the same breaking change.
-4. Report: state whether the message is valid, then list specific fixes if needed.
+When asked to review a commit message or a PR title, check the format, check
+that the type matches the diff (a `docs` commit has no logic changes), and
+require at least one breaking-change marker for a breaking change. If both
+markers are present, confirm they describe the same change. State whether the
+message is valid, then list specific fixes.
 
 ## Commit Workflow
 
-When the user asks to commit changes, that request authorizes staging and committing
-the changes within the scope they named. Do not ask for file-by-file confirmation
-unless the semantic commit boundary is genuinely ambiguous.
+A request to commit authorizes staging and committing the changes within the
+scope the user named.
 
-Follow these steps in order:
+1. Run `git status`. Stop and tell the user when there is a conflict, an
+   in-progress merge, rebase, or cherry-pick, or no changes.
+2. Determine the candidate changes. Honor an explicit scope such as "staged
+   changes only", named paths, or a named feature. Otherwise, consider all
+   staged, unstaged, and untracked changes.
+3. Read the complete candidate changes: staged and unstaged diffs and relevant
+   untracked files. Stats, name-status output, and file lists are not
+   substitutes.
+4. Partition the changes into commit units by purpose and semantic domain. A
+   domain is a coherent product capability or component, not a file or
+   directory:
+   - Files belong together when they implement one purpose in one domain,
+     including its tests, docs, migrations, generated files, and dependency or
+     lockfile updates.
+   - Separate changes to different domains, and changes that can be understood,
+     reverted, or reviewed independently, such as unrelated behavior,
+     formatting, or maintenance.
+   - One file can contain several units. Use hunk-level staging to split it.
+5. Choose the path:
+   - **One unit**: stage all of it and continue without asking.
+   - **Several units**: present an ordered plan with the message and the files
+     or hunks of each commit. Ask once, and wait for the answer before you
+     change the index or commit.
+   - **Ambiguous boundary**: ask only the smallest question that the content
+     cannot answer.
+6. For each authorized unit, stage only that unit, read the full
+   `git diff --staged`, and verify that it contains the complete unit and
+   nothing from another unit.
+7. Write the message from the staged diff, validate it against these rules, and
+   commit with `git commit -m`.
+8. After all commits, run `git status` and report the commits and any remaining
+   changes.
 
-1. Run `git status` to determine the working tree state.
-2. Stop and tell the user when there is a conflict or an in-progress merge,
-   rebase, or cherry-pick. Stop when there are no changes.
-3. Determine the candidate changes:
-   - Honor an explicit scope such as "staged changes only", named paths, or a
-     named feature.
-   - Otherwise, consider all staged, unstaged, and untracked changes. Existing
-     staging state alone is not a semantic boundary and does not require a
-     question.
-4. Read the complete candidate changes before deciding their commit boundaries.
-   Inspect both staged and unstaged diffs and read relevant untracked files;
-   stats, name-status output, and file lists are not sufficient substitutes.
-5. Partition the changes into cohesive commit units by purpose and semantic
-   domain. A domain is a coherent product capability or component, not a file or
-   directory. Paths are evidence, but file count and directory count are not
-   decision criteria:
-   - Multiple files belong together when they implement one purpose in one
-     module or domain, including its tests, docs, migrations, generated files,
-     and dependency or lockfile updates.
-   - One file may contain multiple commit units when independent changes affect
-     different purposes or domains.
-   - Different modules or domains are separate commit units. Also separate
-     changes that can be understood, reverted, or reviewed independently,
-     especially unrelated behavior, formatting, or maintenance.
-6. Choose the matching path:
-   - **One cohesive commit unit** — Stage the whole unit, including all related
-     files or hunks, and continue without asking for confirmation.
-   - **Multiple commit units** — Present an ordered split plan with the proposed
-     Conventional Commit message and included files or hunks for each commit.
-     Ask once whether to execute that plan, and wait for the user's response
-     before changing the index or committing.
-   - **Ambiguous boundary** — Ask only the smallest question needed when the
-     content does not provide enough evidence to decide whether changes belong
-     together.
-7. For each authorized commit unit, stage only that unit and run
-   `git diff --staged`. Read the full staged diff and verify that it contains the
-   complete unit and no changes from another unit.
-8. Select type and scope from the staged diff, detect the language from recent
-   commits, and write the commit message.
-9. Validate the message against this spec and the staged diff, then commit with
-   `git commit -m`.
-10. After all planned commits, run `git status` and report the created commits
-    and any remaining changes.
+## Common Mistakes
 
-### Splitting Commits
-
-Decide whether to split from semantic intent, not from the number of changed
-files, directories, or staging states. Two or more semantic domains require a
-split plan and confirmation. Look for:
-
-- Changes to different modules or domains.
-- A mix of behavior changes and formatting/style changes.
-- Multiple distinct purposes that would need separate subjects.
-
-Do not split a cohesive change merely because it touches many files or combines
-implementation with its supporting tests, docs, schema changes, or generated
-artifacts. Conversely, consider splitting a single file when it contains
-independent changes. If a safe split requires hunk-level staging, use it rather
-than grouping unrelated changes by filename.
+- Asking for file-by-file confirmation of one cohesive change.
+- Treating the current staging state as a commit boundary. Staged versus
+  unstaged is not a semantic difference.
+- Deciding to split from the number of files or directories instead of from
+  purpose and domain.
+- Grouping unrelated hunks because they are in the same file.
