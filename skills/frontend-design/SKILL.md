@@ -3,12 +3,15 @@ name: frontend-design
 description: >-
   Design, implement, redesign, or visually review frontend experiences when a
   task materially concerns visual hierarchy, layout, responsive behavior, or
-  interaction design. Do not use for backend, API, infrastructure, or
-  frontend logic work without a material design impact.
+  interaction design: for example "redesign this page", "make it look
+  better", "fix the mobile layout", "重新设计这个页面", "界面太乱了",
+  "调一下样式和布局", or "适配移动端". Do not use for claude.ai Artifacts, or
+  for backend, API, infrastructure, or frontend logic work without a material
+  design impact.
 license: MIT
 metadata:
   author: Ash Li
-  version: '2026-08-23'
+  version: '2026-11-21'
 ---
 
 # Frontend Design
@@ -19,8 +22,7 @@ language or expanding the user's request.
 
 ## Choose the Mode
 
-- For design, implementation, or redesign, read and follow applicable project
-  instructions. Check the user's requirements, `DESIGN.md`, and the existing
+- For design, implementation, or redesign, check `DESIGN.md` and the existing
   design system and conventions before changing the interface. Preserve the
   current product language unless the user requests a new direction.
 - For review-only work, report concrete defects and their user impact without

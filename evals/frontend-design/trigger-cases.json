@@ -11,6 +11,7 @@
     "给 /api/users 加分页。",
     "把这个 React 组件从 class 改成 hooks，界面不变。",
     "Fix the failing unit test in Button.test.tsx.",
-    "帮我配置一下 Vite 的 proxy。"
+    "帮我配置一下 Vite 的 proxy。",
+    "做一个 Artifact 页面，展示这份销售数据。"
   ]
 }
