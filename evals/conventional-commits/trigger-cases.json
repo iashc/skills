@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "提交一下这些改动。",
+    "Commit my changes.",
+    "这条提交信息写得对吗：`Fixed bug in login.`",
+    "这个改动应该用 feat 还是 refactor？",
+    "帮我开个 PR。",
+    "Review the title of this PR before I merge it.",
+    "把最近三个提交 squash 成一个，重写提交信息。"
+  ],
+  "should_not_trigger": [
+    "看看最近谁改过 auth.ts。",
+    "Review the code in this PR for bugs.",
+    "把当前分支推送到远端。",
+    "解决这个 rebase 冲突。",
+    "撤销工作区里对 config.ts 的修改。"
+  ]
+}

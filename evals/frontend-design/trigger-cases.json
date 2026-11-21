@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "这个设置页太乱了，重新设计一下布局。",
+    "Make the dashboard usable on mobile. The table overflows the screen.",
+    "审查一下这个落地页的视觉层级和可访问性，先别改代码。",
+    "Build a pricing page for our app.",
+    "按钮的间距和对齐看着不舒服，调一下。"
+  ],
+  "should_not_trigger": [
+    "表单提交后状态没有更新，修一下。",
+    "给 /api/users 加分页。",
+    "把这个 React 组件从 class 改成 hooks，界面不变。",
+    "Fix the failing unit test in Button.test.tsx.",
+    "帮我配置一下 Vite 的 proxy。"
+  ]
+}

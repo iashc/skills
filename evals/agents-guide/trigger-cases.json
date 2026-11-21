@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "帮这个仓库写一份 AGENTS.md。",
+    "CLAUDE.md 太长了，帮我精简一下，只留每次都用得到的。",
+    "把 CLAUDE.md 迁移到 AGENTS.md，CLAUDE.md 改成软链接。",
+    "Add a rule to AGENTS.md: run `pnpm test` before finishing.",
+    "The build command in our agent instructions is outdated. Fix it.",
+    "packages/api 需要单独的 agent 指令，拆一个嵌套的 AGENTS.md。"
+  ],
+  "should_not_trigger": [
+    "润色一下 README，读起来太绕了。",
+    "帮我写一个新的 Skill，用来生成 changelog。",
+    "Write a CONTRIBUTING.md for human contributors.",
+    "提交这些改动。",
+    "解释一下这个仓库的目录结构。"
+  ]
+}
